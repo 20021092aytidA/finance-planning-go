@@ -1,16 +1,20 @@
 package main
 
 import (
-	"finance-planning-go/middleware"
+	"finance-planning-go/config/env_cfg"
+	"finance-planning-go/middleware/cors_middleware"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	env_cfg.Load()
 	app := gin.Default()
 	defer func() {
-		fmt.Println("== API STOPPED ==")
+		fmt.Println("== API STARTED ==")
+		app.Run(fmt.Sprintf("localhost:%s", env_cfg.Get("API_PORT")))
 	}()
-	app.Use(middleware.UseCORS())
+
+	app.Use(cors_middleware.UseCORS())
 }

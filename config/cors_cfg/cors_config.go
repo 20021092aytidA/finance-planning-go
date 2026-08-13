@@ -1,4 +1,4 @@
-package config
+package cors_cfg
 
 import (
 	"time"
@@ -6,7 +6,7 @@ import (
 	"github.com/gin-contrib/cors"
 )
 
-func LoadCORSCfg() cors.Config {
+func Load() cors.Config {
 	corsCfg := cors.Config{
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization", "X-CSRF-Token"},
 		ExposeHeaders:    []string{"Content-Length"},
