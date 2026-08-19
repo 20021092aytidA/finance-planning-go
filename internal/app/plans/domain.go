@@ -1,5 +1,9 @@
 package plans
 
+func (ViewModel) TableName() string {
+	return "plans"
+}
+
 type PlanHandler struct{}
 type PlanService struct{}
 type PlanRoute struct{}
@@ -22,7 +26,7 @@ type AllowedQuery struct {
 }
 
 type ViewModel struct {
-	Id             *int     `db:"id" json:"id"`
+	Id             *int     `db:"id" json:"id" gorm:"primaryKey"`
 	Name           *string  `db:"name" json:"name"`
 	Price          *float32 `db:"price" json:"price"`
 	MoneyAllocated *float32 `db:"money_allocated" json:"moneyAllocated"`

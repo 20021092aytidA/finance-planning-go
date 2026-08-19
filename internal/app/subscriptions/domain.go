@@ -1,5 +1,9 @@
 package subscriptions
 
+func (ViewModel) TableName() string {
+	return "subscriptions"
+}
+
 type SubscriptionService struct{}
 type SubscriptionHandler struct{}
 type SubscriptionRoute struct{}
@@ -23,7 +27,7 @@ type AllowedQuery struct {
 }
 
 type ViewModel struct {
-	Id        *int     `db:"id" json:"id"`
+	Id        *int     `db:"id" json:"id" gorm:"primaryKey"`
 	Name      *string  `db:"name" json:"name"`
 	Interval  *int     `db:"interval" json:"interval"`
 	Price     *float32 `db:"price" json:"price"`

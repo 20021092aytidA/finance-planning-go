@@ -1,5 +1,9 @@
 package users
 
+func (ViewModel) TableName() string {
+	return "users"
+}
+
 type UserHandler struct{}
 type UserService struct{}
 type UserRoute struct{}
@@ -21,7 +25,7 @@ type AllowedQuery struct {
 }
 
 type ViewModel struct {
-	Id       *int    `db:"id" json:"id"`
+	Id       *int    `db:"id" json:"id" gorm:"primaryKey"`
 	Email    *string `db:"email" json:"email"`
 	Username *string `db:"username" json:"username"`
 }
