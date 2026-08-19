@@ -8,5 +8,5 @@ import (
 
 func Init(c *gin.Engine) {
 	v1 := c.Group("/finance-planning-api/v1")
-	plans.InitRoute(v1)
+	plans.PlanRoute{}.InitRoute(v1)
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func View(c *gin.Context) {
+func (p PlanHandler) View(c *gin.Context) {
 	var query AllowedQuery = AllowedQuery{
 		PageQuery: PageQuery{
 			Page:  1,
@@ -23,7 +23,7 @@ func View(c *gin.Context) {
 		return
 	}
 
-	errGet, plans := Get(query)
+	errGet, plans := PlanService{}.Get(query)
 	if errGet != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status":      http.StatusInternalServerError,

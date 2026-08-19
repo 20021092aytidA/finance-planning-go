@@ -1,5 +1,9 @@
 package plans
 
+type PlanHandler struct{}
+type PlanService struct{}
+type PlanRoute struct{}
+
 type DataQuery struct {
 	Id             string `form:"id"`
 	Name           string `form:"name"`

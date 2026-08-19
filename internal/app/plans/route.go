@@ -2,6 +2,6 @@ package plans
 
 import "github.com/gin-gonic/gin"
 
-func InitRoute(c *gin.RouterGroup) {
-	c.GET("/plans", View)
+func (p PlanRoute) InitRoute(c *gin.RouterGroup) {
+	c.GET("/plans", PlanHandler{}.View)
 }
