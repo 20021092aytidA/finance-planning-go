@@ -19,3 +19,11 @@ func (s SubscriptionService) Post(newSub *PostModel) error {
 
 	return nil
 }
+
+func (s SubscriptionService) Delete(id string) error {
+	if err := database.DB.Table("subscriptions").Delete(ViewModel{}, id).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

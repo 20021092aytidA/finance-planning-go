@@ -67,3 +67,30 @@ func (s SubscriptionHandler) Create(c *gin.Context) {
 		"data":    postBody,
 	})
 }
+
+func (s SubscriptionHandler) Drop(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":      http.StatusBadRequest,
+			"message":     "missing param!",
+			"description": "param needed",
+		})
+		return
+	}
+
+	errDel := SubscriptionService{}.Delete(id)
+	if errDel != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":      http.StatusInternalServerError,
+			"message":     "failed deleting subscription!",
+			"description": errDel.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "success deleting subscription",
+	})
+}
