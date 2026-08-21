@@ -23,7 +23,7 @@ func (p PlanHandler) View(c *gin.Context) {
 		return
 	}
 
-	errGet, plans := PlanService{}.Get(query)
+	errGet, plans := PlanService{}.Get(&query)
 	if errGet != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status":      http.StatusInternalServerError,
@@ -51,7 +51,7 @@ func (p PlanHandler) Create(c *gin.Context) {
 		return
 	}
 
-	errPost := PlanService{}.Post(postBody)
+	errPost := PlanService{}.Post(&postBody)
 	if errPost != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status":      http.StatusInternalServerError,
