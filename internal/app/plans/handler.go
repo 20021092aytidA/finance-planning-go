@@ -39,3 +39,32 @@ func (p PlanHandler) View(c *gin.Context) {
 		"data":    plans,
 	})
 }
+
+func (p PlanHandler) Create(c *gin.Context) {
+	var postBody PostModel
+	if errBody := c.ShouldBind(&postBody); errBody != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":      http.StatusBadRequest,
+			"message":     "missing body!",
+			"description": errBody.Error(),
+		})
+		return
+	}
+
+	errPost := PlanService{}.Post(postBody)
+	if errPost != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":      http.StatusInternalServerError,
+			"message":     "failed creating plan!",
+			"description": errPost.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"status":  http.StatusCreated,
+		"message": "success creating plan!",
+		"data":    postBody,
+	})
+
+}

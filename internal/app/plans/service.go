@@ -11,3 +11,10 @@ func (p PlanService) Get(query AllowedQuery) (error, []ViewModel) {
 
 	return nil, plans
 }
+
+func (p PlanService) Post(postBody PostModel) error {
+	if err := database.DB.Table("plans").Create(&postBody).Error; err != nil {
+		return err
+	}
+	return nil
+}
