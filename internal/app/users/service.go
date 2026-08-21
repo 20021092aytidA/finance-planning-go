@@ -18,3 +18,11 @@ func (u UserService) Post(newUser *PostModel) error {
 	}
 	return nil
 }
+
+func (u UserService) Delete(id string) error {
+	if err := database.DB.Table("users").Delete(ViewModel{}, id).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

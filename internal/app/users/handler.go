@@ -73,3 +73,30 @@ func (u UserHandler) Create(c *gin.Context) {
 		"data":    showUser,
 	})
 }
+
+func (u UserHandler) Drop(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":      http.StatusBadRequest,
+			"message":     "missing param!",
+			"description": "param needed",
+		})
+		return
+	}
+
+	errDel := UserService{}.Delete(id)
+	if errDel != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":      http.StatusInternalServerError,
+			"message":     "failed deleting user!",
+			"description": errDel.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "success deleting user!",
+	})
+}
