@@ -23,7 +23,7 @@ func (s SubscriptionHandler) View(c *gin.Context) {
 		return
 	}
 
-	errGet, subs := SubscriptionService{}.Get(query)
+	errGet, subs := SubscriptionService{}.Get(&query)
 	if errGet != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status":      http.StatusInternalServerError,
@@ -37,5 +37,33 @@ func (s SubscriptionHandler) View(c *gin.Context) {
 		"status":  http.StatusOK,
 		"message": "success fetching subscriptions!",
 		"data":    subs,
+	})
+}
+
+func (s SubscriptionHandler) Create(c *gin.Context) {
+	var postBody PostModel
+	if errBody := c.ShouldBind(&postBody); errBody != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":      http.StatusBadRequest,
+			"message":     "missing body!",
+			"description": errBody.Error(),
+		})
+		return
+	}
+
+	errPost := SubscriptionService{}.Post(&postBody)
+	if errPost != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":      http.StatusInternalServerError,
+			"message":     "failed creating subscription!",
+			"description": errPost.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"status":  http.StatusCreated,
+		"message": "success creating subscription!",
+		"data":    postBody,
 	})
 }
