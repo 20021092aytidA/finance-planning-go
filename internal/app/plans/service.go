@@ -18,3 +18,11 @@ func (p PlanService) Post(postBody *PostModel) error {
 	}
 	return nil
 }
+
+func (p PlanService) Delete(id string) error {
+	if err := database.DB.Table("plans").Delete(&ViewModel{}, id).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

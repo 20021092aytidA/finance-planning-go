@@ -68,3 +68,30 @@ func (p PlanHandler) Create(c *gin.Context) {
 	})
 
 }
+
+func (p PlanHandler) Drop(c *gin.Context) {
+	id := c.Param("id")
+	if id == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":      http.StatusBadRequest,
+			"message":     "missing param!",
+			"description": "param is needed!",
+		})
+		return
+	}
+
+	errDel := PlanService{}.Delete(id)
+	if errDel != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":      http.StatusInternalServerError,
+			"message":     "failed deleting plan!",
+			"description": errDel.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "success deleting plan!",
+	})
+}
